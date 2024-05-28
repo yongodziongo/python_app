@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clicker Game</title>
+    <script>
+        function sendClick() {
+            fetch('/click', {
+                method: 'POST'
+            }).then(response => {
+                if (response.ok) {
+                    const pointsElement = document.getElementById('points');
+                    pointsElement.textContent = parseInt(pointsElement.textContent) + 1;
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Witaj, {{ user.username }}!</h1>
+    <h2>Twoje punkty ECTS: <span id="points">{{ user.points }}</span></h2>
+    <img src="{{ url_for('static', filename='pbs.jpg') }}" alt="Kliknij tu!" onclick="sendClick()">
+    <br>
+    <a href="{{ url_for('leaderboard') }}">Leaderboard</a>
+</body>
+</html>
